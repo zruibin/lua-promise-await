@@ -9,7 +9,7 @@ local function safeCall(func, resolve, reject, ...)
     local result = {pcall(func, ...)}
     if result[1] then
         if resolve then
-            resolve(unpack(result, 2))
+            resolve(table.unpack(result, 2))
         end
     else
         if reject then
@@ -108,7 +108,7 @@ function M:next(onResolve, onReject)
     end
 
     if self.state == M.FULFILLED then
-        promise.resolve(unpack(self.result))
+        promise.resolve(table.unpack(self.result))
     elseif self.state == M.REJECTED then
         promise.reject(self.result)
     end
@@ -149,7 +149,7 @@ function M.resolve(...)
     local result = {...}
     return M(
         function(resolve, reject)
-            resolve(unpack(result))
+            resolve(table.unpack(result))
         end
     )
 end

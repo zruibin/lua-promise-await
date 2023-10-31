@@ -28,7 +28,7 @@ function async(func)
         return Promise(
             function(resolve, reject)
                 local function proc()
-                    resolve(func(unpack(args)))
+                    resolve(func(table.unpack(args)))
                 end
                 local co = coroutine.create(proc)
                 coRejects[co] = reject
@@ -65,7 +65,7 @@ function await(promise)
         end
     )
     if result then
-        return unpack(result)
+        return table.unpack(result)
     end
     co = coroutine.running()
     assert(co, 'await should be used in a coroutine')
